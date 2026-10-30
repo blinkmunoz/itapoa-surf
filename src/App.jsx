@@ -733,7 +733,7 @@ function App() {
 
       <footer className="site-footer">
         <a className="footer-brand" href="#inicio">ITAPOÁ <span>— SURF & MAR</span></a>
-        <p>Feito com carinho pelo litoral de Itapoá, SC.</p>
+        <p>Feito em Itapoá, de surfista para surfista.</p>
         <p>
           Previsão:{" "}
           <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">
