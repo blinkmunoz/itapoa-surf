@@ -2,8 +2,8 @@
 
 :root {
   font-family: "DM Sans", "Segoe UI", sans-serif;
-  color: #173c3b;
-  background: #f7f7f2;
+  color: #87ceeb;
+  background: #05080c;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -11,17 +11,19 @@
   font-optical-sizing: auto;
   font-weight: 400;
 
-  --ink: #173c3b;
-  --ink-soft: #47615d;
-  --muted: #788a80;
-  --paper: #f7f7f2;
-  --white: #fffefa;
-  --deep: #143d3d;
-  --deepest: #103232;
-  --sea: #1f8279;
-  --sea-light: #b7ddd0;
-  --sun: #f2c98a;
-  --line: #e6e9df;
+  --ink: #87ceeb;
+  --ink-soft: #abdff3;
+  --muted: #76a9bf;
+  --paper: #05080c;
+  --white: #0c131b;
+  --deep: #080e14;
+  --deepest: #05090e;
+  --sea: #54b9e8;
+  --sea-light: #a7e5ff;
+  --sun: #87ceeb;
+  --line: #1b3341;
+  --sky: #87ceeb;
+  --sky-soft: #abdff3;
 }
 
 * {
@@ -1317,4 +1319,234 @@ a:focus-visible {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+:root,
+body,
+.site-shell {
+  color: var(--sky);
+  background: #05080c;
+}
+
+.site-header {
+  background: #05080c;
+}
+
+.brand,
+.main-nav a,
+.main-nav a:hover,
+.header-location,
+.header-location:hover,
+.footer-brand,
+.site-footer,
+.site-footer p a,
+.section-heading h2,
+.about-copy h2,
+.weather-card strong,
+.forecast-card > strong,
+.forecast-card > strong span,
+.hero h1,
+.hero-description,
+.hero-caption,
+.hero-bottom,
+.scene-note,
+.scene-stamp,
+.section-kicker,
+.about-copy > p:not(.section-kicker),
+.forecast-note,
+.data-disclaimer,
+.metric-label,
+.metric-description,
+.forecast-time,
+.forecast-wind,
+.surf-card-footer,
+.surf-card-time,
+.surf-details p,
+.live-indicator,
+.notice,
+.map-link,
+.tide-note,
+.surf-mood,
+.primary-link,
+.refresh-button,
+.forecast-empty {
+  color: var(--sky);
+}
+
+.brand small,
+.footer-brand span,
+.scene-note,
+.scene-stamp,
+.hero-caption,
+.hero-bottom,
+.forecast-note,
+.about-copy > p:not(.section-kicker),
+.data-disclaimer,
+.metric-label,
+.metric-description,
+.forecast-time,
+.forecast-wind,
+.surf-card-footer,
+.surf-card-time,
+.surf-details p,
+.tide-note {
+  color: var(--sky-soft);
+}
+
+.brand-mark,
+.header-location span,
+.section-kicker,
+.metric-symbol,
+.weather-icon,
+.forecast-card .weather-icon,
+.forecast-period,
+.map-link,
+.map-link:hover,
+.site-footer p a,
+.hero h1 span,
+.wave-unit {
+  color: var(--sky);
+}
+
+.hero {
+  background:
+    radial-gradient(ellipse at 86% 28%, rgb(37 121 163 / 20%), transparent 36%),
+    linear-gradient(115deg, #080e14 3%, #070c12 49%, #0a151d 100%);
+}
+
+.hero::before {
+  background-image: radial-gradient(rgb(135 206 235 / 9%) 0.7px, transparent 0.7px);
+}
+
+.hero-description,
+.surf-details p,
+.live-indicator {
+  color: var(--sky-soft);
+}
+
+.overline,
+.surf-details .surf-mood,
+.surf-card,
+.surf-card .surf-card-time,
+.surf-card .surf-card-footer,
+.surf-card .surf-details p,
+.surf-card .live-indicator,
+.surf-card .wave-label {
+  color: var(--sky);
+}
+
+.overline > span,
+.caption-line,
+.hero-bottom-line {
+  background: var(--sky);
+}
+
+.primary-link {
+  border: 1px solid rgb(135 206 235 / 38%);
+  background: #10212c;
+}
+
+.primary-link:hover {
+  background: #173345;
+}
+
+.scene-sun-glow {
+  background: radial-gradient(circle, rgb(135 206 235 / 12%), transparent 70%);
+}
+
+.scene-stamp {
+  border-color: rgb(135 206 235 / 42%);
+}
+
+.wave-artwork {
+  filter: drop-shadow(0 14px 30px rgb(0 0 0 / 40%));
+}
+
+.surf-card {
+  border: 1px solid #1b3949;
+  background:
+    radial-gradient(ellipse at 100% 100%, rgb(54 153 197 / 13%), transparent 46%),
+    linear-gradient(140deg, #0c1821, #080f16);
+}
+
+.surf-divider,
+.surf-card-footer {
+  border-color: rgb(135 206 235 / 22%);
+}
+
+.surf-card-footer {
+  border-top: 1px solid rgb(135 206 235 / 22%);
+}
+
+.surf-card-top .live-indicator > span {
+  background: var(--sky);
+  box-shadow: 0 0 0 3px rgb(135 206 235 / 16%);
+}
+
+.weather-card,
+.forecast-strip {
+  border-color: #1b3341;
+  background: #0b1219;
+}
+
+.weather-card {
+  box-shadow: inset 0 1px 0 rgb(135 206 235 / 3%);
+}
+
+.forecast-section {
+  background: #080d12;
+}
+
+.forecast-card {
+  border-color: #1b2832;
+}
+
+.forecast-card:last-child {
+  border-color: transparent;
+}
+
+.about-mark {
+  border-color: #28536a;
+  color: var(--sky);
+}
+
+.about-mark span {
+  color: var(--sky-soft);
+}
+
+.refresh-button {
+  border-color: #244253;
+  background: #0b1219;
+}
+
+.refresh-button:hover:not(:disabled) {
+  border-color: var(--sky);
+  color: #d3f2ff;
+}
+
+.notice {
+  border-color: #244253;
+  background: #0b1720;
+  color: var(--sky);
+}
+
+.notice-error {
+  border-color: #644945;
+  background: #1b1113;
+  color: #f0b5ac;
+}
+
+.map-link:hover,
+.site-footer p a:hover {
+  color: #d3f2ff;
+}
+
+.site-footer {
+  border-color: #1b3341;
+  background: #05080c;
+}
+
+.skeleton-line,
+.skeleton-wave {
+  background: #172a35;
 }

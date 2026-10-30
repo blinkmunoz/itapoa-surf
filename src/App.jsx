@@ -143,47 +143,47 @@ function WaveArtwork() {
       aria-hidden="true"
       preserveAspectRatio="xMidYMid slice"
     >
-      <circle cx="548" cy="147" r="72" fill="#F2C98A" fillOpacity=".9" />
-      <circle cx="548" cy="147" r="104" fill="#F2C98A" fillOpacity=".08" />
+      <circle cx="548" cy="147" r="72" fill="#87CEEB" fillOpacity=".9" />
+      <circle cx="548" cy="147" r="104" fill="#87CEEB" fillOpacity=".08" />
       <path
         d="M0 307c84-35 132-48 206-41 108 10 151 75 252 63 81-10 118-76 189-88 45-7 81 0 113 12v217H0V307Z"
-        fill="#218B83"
+        fill="#2688A8"
         fillOpacity=".52"
       />
       <path
         d="M0 363c100-40 184-49 276-18 83 29 147 47 218 15 79-36 138-72 266-46v192H0V363Z"
-        fill="#42B6A5"
+        fill="#3FA9D0"
         fillOpacity=".66"
       />
       <path
         d="M0 414c93-28 173-34 255-5 104 36 173 40 256-1 84-41 163-47 249-14v112H0V414Z"
-        fill="#93D7C2"
+        fill="#88CEEB"
         fillOpacity=".72"
       />
       <path
         d="M142 344c43-15 76-13 111-1 24 8 38 16 66 16"
-        stroke="#E8FAE8"
+        stroke="#D3F2FF"
         strokeOpacity=".64"
         strokeWidth="3"
         strokeLinecap="round"
       />
       <path
         d="M472 391c39-17 73-16 108-3 19 7 31 14 51 14"
-        stroke="#E8FAE8"
+        stroke="#D3F2FF"
         strokeOpacity=".64"
         strokeWidth="3"
         strokeLinecap="round"
       />
       <path
         d="M352 276c13-23 27-35 44-37 18-2 27 16 44 14 10-1 18-8 26-18"
-        stroke="#BFE9D8"
+        stroke="#B6E9FF"
         strokeOpacity=".7"
         strokeWidth="2"
         strokeLinecap="round"
       />
       <path
         d="M394 279c6-11 13-16 21-16 8 0 12 7 20 7 5 0 9-4 12-9"
-        stroke="#BFE9D8"
+        stroke="#B6E9FF"
         strokeOpacity=".55"
         strokeWidth="2"
         strokeLinecap="round"
