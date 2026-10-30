@@ -23,3 +23,11 @@ npm run preview
 As condições do tempo e do mar são consultadas no
 [Open-Meteo](https://open-meteo.com/) para as coordenadas da região de Itapoá.
 Os valores são estimativas e podem variar entre pontos diferentes da praia.
+
+## Câmera da praia
+
+A página já tem um espaço reservado para a câmera. Quando a transmissão
+pública estiver pronta, configure a URL de incorporação em
+`CAMERA_STREAM_URL`, no início de `src/App.jsx`. Use o link de incorporação
+fornecido pela plataforma da câmera. Não coloque senhas, links privados ou
+endereços da rede local no site público.

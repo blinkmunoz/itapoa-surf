@@ -1550,3 +1550,155 @@ body,
 .skeleton-wave {
   background: #172a35;
 }
+
+.camera-section {
+  padding-top: 20px;
+  padding-bottom: 70px;
+}
+
+.camera-section .section-heading {
+  margin-bottom: 20px;
+}
+
+.camera-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--sky-soft);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+.camera-status > span {
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--sky);
+  border-radius: 50%;
+}
+
+.camera-frame {
+  min-height: 270px;
+  overflow: hidden;
+  border: 1px solid #1b3341;
+  border-radius: 4px;
+  background: #080e14;
+}
+
+.camera-frame iframe {
+  display: block;
+  width: 100%;
+  min-height: 270px;
+  border: 0;
+  background: #080e14;
+}
+
+.camera-placeholder {
+  position: relative;
+  display: grid;
+  min-height: 360px;
+  overflow: hidden;
+  place-items: center;
+  background:
+    radial-gradient(ellipse at 50% 120%, rgb(44 142 184 / 16%), transparent 58%),
+    linear-gradient(155deg, #0b151d, #070c12 68%);
+}
+
+.camera-placeholder::before,
+.camera-placeholder::after {
+  position: absolute;
+  right: -5%;
+  bottom: -100px;
+  left: -5%;
+  height: 175px;
+  border: 1px solid rgb(135 206 235 / 14%);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.camera-placeholder::after {
+  right: 12%;
+  bottom: -124px;
+  left: 12%;
+  border-color: rgb(135 206 235 / 10%);
+}
+
+.camera-placeholder-content {
+  z-index: 1;
+  max-width: 430px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.camera-icon {
+  display: grid;
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 18px;
+  place-items: center;
+  border: 1px solid #28536a;
+  border-radius: 50%;
+  color: var(--sky);
+}
+
+.camera-icon svg {
+  width: 34px;
+  height: 34px;
+}
+
+.camera-placeholder-title {
+  margin: 0;
+  color: var(--sky);
+  font-family: Manrope, "Segoe UI", sans-serif;
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.camera-placeholder-copy {
+  margin: 9px auto 0;
+  color: var(--sky-soft);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.camera-frame-caption {
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  color: var(--sky-soft);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+}
+
+@media (max-width: 640px) {
+  .camera-section {
+    padding-top: 8px;
+    padding-bottom: 52px;
+  }
+
+  .camera-frame,
+  .camera-frame iframe {
+    min-height: 230px;
+  }
+
+  .camera-placeholder {
+    min-height: 290px;
+  }
+
+  .camera-placeholder-content {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .camera-placeholder-copy {
+    font-size: 10px;
+  }
+
+  .camera-frame-caption {
+    right: 12px;
+    bottom: 11px;
+    font-size: 7px;
+  }
+}

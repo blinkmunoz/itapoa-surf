@@ -5,6 +5,7 @@ const LAT = -26.11;
 const LON = -48.63;
 const API_BASE = "https://api.open-meteo.com/v1";
 const MARINE_API = "https://marine-api.open-meteo.com/v1/marine";
+const CAMERA_STREAM_URL = "";
 
 const weatherDescriptions = {
   0: "Céu limpo",
@@ -341,6 +342,7 @@ function App() {
         <nav className="main-nav" aria-label="Navegação principal">
           <a href="#condicoes">Condições</a>
           <a href="#previsao">Previsão</a>
+          <a href="#camera">Câmera</a>
           <a href="#sobre">A praia</a>
         </nav>
         <a
@@ -602,6 +604,70 @@ function App() {
                 </p>
               )}
             </div>
+          </div>
+        </section>
+
+        <section className="camera-section section-wrap" id="camera">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">DIRETO DA PRAIA</p>
+              <h2>Câmera ao vivo</h2>
+            </div>
+            <span className="camera-status">
+              <span /> {CAMERA_STREAM_URL ? "AO VIVO" : "EM BREVE"}
+            </span>
+          </div>
+
+          <div className="camera-frame">
+            {CAMERA_STREAM_URL ? (
+              <iframe
+                src={CAMERA_STREAM_URL}
+                title="Câmera ao vivo da praia de Itapoá"
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allow="autoplay; encrypted-media; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            ) : (
+              <div className="camera-placeholder">
+                <div className="camera-placeholder-content">
+                  <span className="camera-icon" aria-hidden="true">
+                    <svg viewBox="0 0 48 48" fill="none">
+                      <rect
+                        x="5"
+                        y="12"
+                        width="27"
+                        height="24"
+                        rx="4"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      />
+                      <path
+                        d="m32 20 11-6v20l-11-6V20Z"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinejoin="round"
+                      />
+                      <circle
+                        cx="18.5"
+                        cy="24"
+                        r="6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </span>
+                  <p className="camera-placeholder-title">
+                    A praia de Itapoá, ao vivo.
+                  </p>
+                  <p className="camera-placeholder-copy">
+                    Este espaço está reservado para a instalação da câmera.
+                    Assim que a transmissão estiver pronta, ela aparecerá aqui.
+                  </p>
+                </div>
+                <span className="camera-frame-caption">ITAPOÁ / SC &nbsp;·&nbsp; 26°07&apos; S</span>
+              </div>
+            )}
           </div>
         </section>
 
