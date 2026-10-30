@@ -1,11 +1,28 @@
 import { useEffect, useState } from "react";
 import "./styles.css";
 
-const LAT = -26.11;
-const LON = -48.63;
 const API_BASE = "https://api.open-meteo.com/v1";
 const MARINE_API = "https://marine-api.open-meteo.com/v1/marine";
-const CAMERA_STREAM_URL = "";
+const spots = [
+  {
+    id: "barra",
+    name: "Barra do Saí",
+    description: "Foz do Rio Saí-Guaçu · divisa PR/SC",
+    latitude: -26.0349,
+    longitude: -48.6087,
+  },
+  {
+    id: "hotweiller",
+    name: "Pico do Hotweiller",
+    description: "Área central de Itapoá · Praia do Hotweiller",
+    latitude: -26.1172,
+    longitude: -48.6158,
+  },
+];
+const cameras = [
+  { spotId: "barra", streamUrl: "" },
+  { spotId: "hotweiller", streamUrl: "" },
+];
 
 const weatherDescriptions = {
   0: "Céu limpo",
@@ -48,11 +65,11 @@ async function getJson(url, signal) {
   return response.json();
 }
 
-async function fetchConditions(signal) {
+async function fetchConditions(signal, spot) {
   const weatherUrl = new URL(`${API_BASE}/forecast`);
   weatherUrl.search = new URLSearchParams({
-    latitude: String(LAT),
-    longitude: String(LON),
+    latitude: String(spot.latitude),
+    longitude: String(spot.longitude),
     current:
       "temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,relative_humidity_2m,weather_code",
     hourly: "temperature_2m,wind_speed_10m,wind_direction_10m,weather_code",
@@ -63,8 +80,8 @@ async function fetchConditions(signal) {
 
   const marineUrl = new URL(MARINE_API);
   marineUrl.search = new URLSearchParams({
-    latitude: String(LAT),
-    longitude: String(LON),
+    latitude: String(spot.latitude),
+    longitude: String(spot.longitude),
     hourly: "wave_height,wave_period,wave_direction,sea_surface_temperature",
     timezone: "America/Sao_Paulo",
     forecast_days: "2",
@@ -232,17 +249,76 @@ function WeatherIcon({ code }) {
   );
 }
 
+function CameraCard({ camera, spot, selected, onSelect, index }) {
+  return (
+    <article className={`camera-card${selected ? " is-selected" : ""}`}>
+      <div className="camera-view">
+        {camera.streamUrl ? (
+          <iframe
+            src={camera.streamUrl}
+            title={`Câmera ao vivo — ${spot.name}`}
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allow="autoplay; encrypted-media; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        ) : (
+          <div className="camera-offline">
+            <WaveArtwork />
+            <span className="camera-tag">CAM {String(index + 1).padStart(2, "0")}</span>
+            <div className="camera-offline-message">
+              <span className="camera-offline-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <rect x="5" y="12" width="27" height="24" rx="4" stroke="currentColor" strokeWidth="2" />
+                  <path d="m32 20 11-6v20l-11-6V20Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <strong>Transmissão em preparação</strong>
+              <span>Aguardando sinal da câmera</span>
+            </div>
+            <span className="camera-signal">● SINAL PENDENTE</span>
+          </div>
+        )}
+      </div>
+      <div className="camera-card-info">
+        <div>
+          <p className="camera-card-kicker">PICO {String(index + 1).padStart(2, "0")}</p>
+          <h3>{spot.name}</h3>
+          <p className="camera-card-location">{spot.description}</p>
+        </div>
+        <button
+          className="camera-select"
+          type="button"
+          aria-pressed={selected}
+          onClick={onSelect}
+        >
+          {selected ? "Pico selecionado" : "Ver condições"}
+          <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+    </article>
+  );
+}
+
 function App() {
   const [conditions, setConditions] = useState(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
+  const [selectedSpotId, setSelectedSpotId] = useState(spots[0].id);
+  const selectedSpot = spots.find((spot) => spot.id === selectedSpotId);
 
   useEffect(() => {
     const controller = new AbortController();
     async function loadInitialConditions() {
+      setLoading(true);
+      setError("");
+      setConditions(null);
       try {
-        const nextConditions = await fetchConditions(controller.signal);
+        const nextConditions = await fetchConditions(
+          controller.signal,
+          selectedSpot,
+        );
         if (!controller.signal.aborted) setConditions(nextConditions);
       } catch (fetchError) {
         if (fetchError.name !== "AbortError") {
@@ -259,12 +335,12 @@ function App() {
 
     loadInitialConditions();
     return () => controller.abort();
-  }, []);
+  }, [selectedSpot]);
 
   function refreshConditions() {
     setRefreshing(true);
     setError("");
-    fetchConditions()
+    fetchConditions(undefined, selectedSpot)
       .then((nextConditions) => setConditions(nextConditions))
       .catch((fetchError) => {
         if (fetchError.name !== "AbortError") {
@@ -356,27 +432,23 @@ function App() {
       </header>
 
       <main>
-        <section className="hero" id="inicio">
+        <section className="hero dashboard-hero" id="inicio">
           <div className="hero-copy">
-            <p className="overline"><span /> LITORAL NORTE DE SANTA CATARINA</p>
+            <p className="overline">
+              <span /> DOIS PICOS · ITAPOÁ, SC · PREVISÃO EM TEMPO REAL
+            </p>
             <h1>
-              Seu próximo
+              Olho no Pico:
               <br />
-              <span>bom dia</span> começa no mar.
+              <span>Previsão e Câmeras</span>
             </h1>
             <p className="hero-description">
-              O ritmo das ondas, o vento e o tempo em Itapoá. Tudo o que você
-              precisa para planejar sua próxima sessão.
+              Da foz do Rio Saí-Guaçu ao pico central do Hotweiller: confira as
+              condições do mar antes de sair de casa.
             </p>
-            <a className="primary-link" href="#condicoes">
-              Ver condições de hoje <span aria-hidden="true">↓</span>
+            <a className="primary-link" href="#camera">
+              Explorar os picos <span aria-hidden="true">↓</span>
             </a>
-            <div className="hero-caption">
-              <span className="caption-line" />
-              <span>26°07&apos; S &nbsp; 48°37&apos; O</span>
-              <span className="caption-separator">·</span>
-              <span>Itapoá, SC</span>
-            </div>
           </div>
 
           <div className="hero-scene">
@@ -392,18 +464,40 @@ function App() {
               <span>VIDA</span>
             </div>
           </div>
-          <div className="hero-bottom">
-            <span>OCEANO ATLÂNTICO</span>
-            <span className="hero-bottom-line" />
-            <span>BRASIL — 26° S</span>
+        </section>
+
+        <section className="camera-section section-wrap" id="camera">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">DOIS PICOS · ITAPOÁ, SC</p>
+              <h2>Câmeras da praia</h2>
+            </div>
+            <span className="camera-status">
+              <span /> TRANSMISSÕES EM PREPARAÇÃO
+            </span>
+          </div>
+          <div className="camera-grid">
+            {cameras.map((camera, index) => {
+              const spot = spots.find(({ id }) => id === camera.spotId);
+              return (
+                <CameraCard
+                  key={camera.spotId}
+                  camera={camera}
+                  spot={spot}
+                  index={index}
+                  selected={selectedSpotId === spot.id}
+                  onSelect={() => setSelectedSpotId(spot.id)}
+                />
+              );
+            })}
           </div>
         </section>
 
         <section className="conditions section-wrap" id="condicoes">
           <div className="section-heading">
             <div>
-              <p className="section-kicker">NA PRAIA AGORA</p>
-              <h2>Como está o mar?</h2>
+              <p className="section-kicker">CONDIÇÕES · {selectedSpot.name}</p>
+              <h2>O mar agora</h2>
             </div>
             <button
               className="refresh-button"
@@ -437,7 +531,7 @@ function App() {
             <article className="surf-card">
               <div className="surf-card-top">
                 <span className="live-indicator">
-                  <span /> {loading ? "CONSULTANDO" : "CONDIÇÕES DE HOJE"}
+                  <span /> {loading ? "CONSULTANDO" : "LEITURA ESTIMADA"}
                 </span>
                 <span className="surf-card-time">
                   {updatedAt ? `ATUALIZADO ÀS ${updatedAt}` : "ITAPOÁ / SC"}
@@ -477,7 +571,8 @@ function App() {
                   <div className="surf-card-footer">
                     <span>Condições estimadas para a região</span>
                     <span className="surf-card-coordinate">
-                      LAT {LAT.toFixed(2)}° &nbsp; LONG {Math.abs(LON).toFixed(2)}° O
+                      LAT {selectedSpot.latitude.toFixed(2)}° &nbsp; LONG{" "}
+                      {Math.abs(selectedSpot.longitude).toFixed(2)}° O
                     </span>
                   </div>
                 </>
@@ -604,70 +699,6 @@ function App() {
                 </p>
               )}
             </div>
-          </div>
-        </section>
-
-        <section className="camera-section section-wrap" id="camera">
-          <div className="section-heading">
-            <div>
-              <p className="section-kicker">DIRETO DA PRAIA</p>
-              <h2>Câmera ao vivo</h2>
-            </div>
-            <span className="camera-status">
-              <span /> {CAMERA_STREAM_URL ? "AO VIVO" : "EM BREVE"}
-            </span>
-          </div>
-
-          <div className="camera-frame">
-            {CAMERA_STREAM_URL ? (
-              <iframe
-                src={CAMERA_STREAM_URL}
-                title="Câmera ao vivo da praia de Itapoá"
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allow="autoplay; encrypted-media; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            ) : (
-              <div className="camera-placeholder">
-                <div className="camera-placeholder-content">
-                  <span className="camera-icon" aria-hidden="true">
-                    <svg viewBox="0 0 48 48" fill="none">
-                      <rect
-                        x="5"
-                        y="12"
-                        width="27"
-                        height="24"
-                        rx="4"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      />
-                      <path
-                        d="m32 20 11-6v20l-11-6V20Z"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinejoin="round"
-                      />
-                      <circle
-                        cx="18.5"
-                        cy="24"
-                        r="6"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      />
-                    </svg>
-                  </span>
-                  <p className="camera-placeholder-title">
-                    A praia de Itapoá, ao vivo.
-                  </p>
-                  <p className="camera-placeholder-copy">
-                    Este espaço está reservado para a instalação da câmera.
-                    Assim que a transmissão estiver pronta, ela aparecerá aqui.
-                  </p>
-                </div>
-                <span className="camera-frame-caption">ITAPOÁ / SC &nbsp;·&nbsp; 26°07&apos; S</span>
-              </div>
-            )}
           </div>
         </section>
 
